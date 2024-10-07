@@ -94,7 +94,7 @@ export default function NewWarehouse() {
             errors={errors}
           />
         </div>
-        <SubmitButton isLoading={loading} title="Category" />
+        <SubmitButton isLoading={loading} title="Warehouse" />
       </form>
     </div>
   );

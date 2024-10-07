@@ -1,16 +1,21 @@
 "use client";
 
 import FormHeader from "@/components/dashboard/FormHeader";
+import ImageInput from "@/components/dashboard/FormInputs/ImageInput";
 import SelectInput from "@/components/dashboard/FormInputs/SelectInput";
 import SubmitButton from "@/components/dashboard/FormInputs/SubmitButton";
 import TextareaInput from "@/components/dashboard/FormInputs/TextareaInput";
 import TextInput from "@/components/dashboard/FormInputs/TextInput";
-import { Plus, X } from "lucide-react";
+import { UploadButton, UploadDropzone } from "@/lib/uploadthing";
+import { Pencil, Plus, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function NewItem() {
+  const [imageUrl, setImageUrl] = useState("");
+
   const categories = [
     {
       label: "Electronics",
@@ -92,6 +97,7 @@ export default function NewItem() {
   } = useForm();
 
   async function onSubmit(data) {
+    data.imageUrl = imageUrl;
     console.log(data);
     setLoading(true);
     const baseUrl = "http://localhost:3000";
@@ -262,6 +268,12 @@ export default function NewItem() {
             register={register}
             isRequired={false}
             errors={errors}
+          />
+
+          <ImageInput
+            label="Item Image"
+            imageUrl={imageUrl}
+            setImageUrl={setImageUrl}
           />
         </div>
         <SubmitButton isLoading={loading} title="Item" />

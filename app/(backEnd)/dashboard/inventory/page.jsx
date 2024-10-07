@@ -4,11 +4,15 @@ import FixedHeader from "@/components/dashboard/FixedHeader";
 import OptionCard from "@/components/dashboard/OptionCard";
 import {
   Boxes,
+  ChartColumnStacked,
   Component,
   FileBadge,
   Proportions,
+  Rotate3D,
   Ruler,
   Shirt,
+  ShoppingBasket,
+  Slack,
   WarehouseIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -19,9 +23,8 @@ export default function Items() {
   const optionCards = [
     {
       title: "Adjustments",
-      description:
-        "Tweak your item prices for specific contacts or transactions",
-      icon: Proportions,
+      description: "Transfer stock from the main warehouse",
+      icon: Rotate3D,
       link: "/dashboard/inventory/adjustments/new",
       linkTitle: "New Adjustment",
       enabled: true,
@@ -30,7 +33,7 @@ export default function Items() {
       title: "Brands",
       description:
         "Tweak your item prices for specific contacts or transactions",
-      icon: FileBadge,
+      icon: Slack,
       link: "/dashboard/inventory/brands/new",
       linkTitle: "New Brand",
       enabled: true,
@@ -38,7 +41,7 @@ export default function Items() {
     {
       title: "Categories",
       description: "Stop similar items in categories",
-      icon: Boxes,
+      icon: ChartColumnStacked,
       link: "/dashboard/inventory/categories/new",
       linkTitle: "New Category",
       enabled: true,
@@ -46,7 +49,7 @@ export default function Items() {
     {
       title: "Items",
       description: "Create standalone items and services that you buy and sell",
-      icon: Shirt,
+      icon: ShoppingBasket,
       link: "/dashboard/inventory/items/new",
       linkTitle: "New Item",
       enabled: true,
@@ -72,7 +75,7 @@ export default function Items() {
   return (
     <div>
       <FixedHeader newLink="/dashboard/inventory/items/new" />
-      <div className="grid grid-cols-1 lg:grid-cols-2 m-4 py-8 px-16 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 m-4 py-8 px-16 gap-6">
         {optionCards.map((card, i) => {
           return <OptionCard optionData={card} key={i} />;
         })}
