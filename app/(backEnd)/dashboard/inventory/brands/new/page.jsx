@@ -4,8 +4,8 @@ import FormHeader from "@/components/dashboard/FormHeader";
 import SubmitButton from "@/components/dashboard/FormInputs/SubmitButton";
 import TextareaInput from "@/components/dashboard/FormInputs/TextareaInput";
 import TextInput from "@/components/dashboard/FormInputs/TextInput";
-import { Plus, X } from "lucide-react";
-import Link from "next/link";
+import { makePostRequest } from "@/lib/apiRequest";
+
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -19,25 +19,7 @@ export default function NewBrand() {
 
   async function onSubmit(data) {
     console.log(data);
-    setLoading(true);
-    const baseUrl = "http://localhost:3000";
-    try {
-      const response = await fetch(`${baseUrl}/api/brands`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (response.ok) {
-        console.log(response);
-        setLoading(false);
-        reset();
-      }
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
+    makePostRequest(setLoading, "api/brands", data, "brand", reset);
   }
   const [loading, setLoading] = useState(false);
 

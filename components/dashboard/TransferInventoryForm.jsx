@@ -4,6 +4,7 @@ import SelectInput from "@/components/dashboard/FormInputs/SelectInput";
 import SubmitButton from "@/components/dashboard/FormInputs/SubmitButton";
 import TextareaInput from "@/components/dashboard/FormInputs/TextareaInput";
 import TextInput from "@/components/dashboard/FormInputs/TextInput";
+import { makePostRequest } from "@/lib/apiRequest";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -30,6 +31,28 @@ export default function TransferInventoryForm() {
       value: "branch4",
     },
   ];
+  const items = [
+    {
+      label: "Item 1",
+      value: "item1",
+    },
+    {
+      label: "Item 2",
+      value: "branch1",
+    },
+    {
+      label: "Branch 2",
+      value: "branch2",
+    },
+    {
+      label: "Branch 3",
+      value: "branch3",
+    },
+    {
+      label: "Branch 4",
+      value: "branch4",
+    },
+  ];
 
   const {
     register,
@@ -40,25 +63,13 @@ export default function TransferInventoryForm() {
 
   async function onSubmit(data) {
     console.log(data);
-    setLoading(true);
-    const baseUrl = "http://localhost:3000";
-    try {
-      const response = await fetch(`${baseUrl}/api/adjustments/transfer`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (response.ok) {
-        console.log(response);
-        setLoading(false);
-        reset();
-      }
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
+    makePostRequest(
+      setLoading,
+      "api/adjustments/transfer",
+      data,
+      "Stock Transfer",
+      reset
+    );
   }
   const [loading, setLoading] = useState(false);
 
@@ -69,7 +80,28 @@ export default function TransferInventoryForm() {
     >
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
         {/* Component from here */}
-
+        <TextInput
+          label="Reference Number"
+          type="number"
+          name="referenceNumber"
+          // defaultValue="54321"
+          register={register}
+          errors={errors}
+        />
+        <SelectInput
+          name="itemId"
+          label="Select the Item"
+          register={register}
+          options={items}
+          className="w-full"
+        />
+        <TextInput
+          label="Enter Quantity of Stock to Transfer"
+          name="transferStockQty"
+          register={register}
+          errors={errors}
+          className="w-full"
+        />
         <SelectInput
           name="givingWarehouseId"
           label="Select the Warehouse that will Give Stock"
@@ -83,13 +115,6 @@ export default function TransferInventoryForm() {
           register={register}
           className="w-full"
           options={branches}
-        />
-        <TextInput
-          label="Enter Quantity of Stock to Transfer"
-          name="transferStockQty"
-          register={register}
-          errors={errors}
-          className="w-full"
         />
 
         <TextareaInput

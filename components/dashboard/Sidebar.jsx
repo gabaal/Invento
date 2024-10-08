@@ -1,5 +1,6 @@
 import {
   BaggageClaim,
+  Blocks,
   Cable,
   ChartColumnIncreasing,
   ChevronLeft,
@@ -34,6 +35,11 @@ export default function Sidebar() {
       title: "Items",
       href: "/dashboard/inventory/items",
     },
+    {
+      title: "Suppliers",
+      href: "/dashboard/inventory/suppliers",
+    },
+
     {
       title: "Units",
       href: "/dashboard/inventory/units",
@@ -115,12 +121,16 @@ export default function Sidebar() {
             icon={ShoppingCart}
           />
 
-          <button className="flex items-center space-x-2 p-2">
+          <Link className="flex items-center space-x-2 p-2 " href="#">
             <ShoppingBasket className="w-4 h-4" />
             <span>Purchases</span>
-          </button>
-          <Link className="flex items-center space-x-2 p-2" href="#">
+          </Link>
+          {/* <Link className="flex items-center space-x-2 p-2" href="#">
             <Cable className="w-4 h-4" />
+            <span>Suppliers</span>
+          </Link> */}
+          <Link className="flex items-center space-x-2 p-2" href="#">
+            <Blocks className="w-4 h-4" />
             <span>Integrations</span>
           </Link>
 

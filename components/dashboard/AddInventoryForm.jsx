@@ -4,6 +4,7 @@ import SelectInput from "@/components/dashboard/FormInputs/SelectInput";
 import SubmitButton from "@/components/dashboard/FormInputs/SubmitButton";
 import TextareaInput from "@/components/dashboard/FormInputs/TextareaInput";
 import TextInput from "@/components/dashboard/FormInputs/TextInput";
+import { makePostRequest } from "@/lib/apiRequest";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -30,6 +31,28 @@ export default function AddInventoryForm() {
       value: "branch4",
     },
   ];
+  const items = [
+    {
+      label: "Item 1",
+      value: "item1",
+    },
+    {
+      label: "Item 2",
+      value: "branch1",
+    },
+    {
+      label: "Branch 2",
+      value: "branch2",
+    },
+    {
+      label: "Branch 3",
+      value: "branch3",
+    },
+    {
+      label: "Branch 4",
+      value: "branch4",
+    },
+  ];
 
   const {
     register,
@@ -40,25 +63,13 @@ export default function AddInventoryForm() {
 
   async function onSubmit(data) {
     console.log(data);
-    setLoading(true);
-    const baseUrl = "http://localhost:3000";
-    try {
-      const response = await fetch(`${baseUrl}/api/adjustments/add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (response.ok) {
-        console.log(response);
-        setLoading(false);
-        reset();
-      }
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
+    makePostRequest(
+      setLoading,
+      "api/adjustments/add",
+      data,
+      "Stock Adjustment",
+      reset
+    );
   }
   const [loading, setLoading] = useState(false);
 
@@ -69,13 +80,24 @@ export default function AddInventoryForm() {
     >
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
         {/* Component from here */}
+        <TextInput
+          label="Reference Number"
+          type="number"
+          name="referenceNumber"
+          // defaultValue="12345"
+          register={register}
+          errors={errors}
+          className="w-full"
+        />
+
         <SelectInput
-          name="receivingWarehouseId"
-          label="Select the Warehouse to Receive Stock"
+          name="itemId"
+          label="Select the Item"
           register={register}
           className="w-full"
-          options={branches}
+          options={items}
         />
+
         <TextInput
           label="Enter Quantity of Stock to Add"
           type="number"
@@ -84,9 +106,16 @@ export default function AddInventoryForm() {
           errors={errors}
           className="w-full"
         />
+        <SelectInput
+          name="receivingWarehouseId"
+          label="Select the Warehouse to Receive Stock"
+          register={register}
+          className="w-full"
+          options={branches}
+        />
 
         <TextareaInput
-          label="Notes"
+          label="Adjustment Notes"
           name="notes"
           register={register}
           errors={errors}

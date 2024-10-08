@@ -4,6 +4,7 @@ import FixedHeader from "@/components/dashboard/FixedHeader";
 import OptionCard from "@/components/dashboard/OptionCard";
 import {
   Boxes,
+  Cable,
   ChartColumnStacked,
   Component,
   FileBadge,
@@ -55,6 +56,14 @@ export default function Items() {
       enabled: true,
     },
     {
+      title: "Suppliers",
+      description: "Add suppliers of products or services",
+      icon: Cable,
+      link: "/dashboard/inventory/suppliers/new",
+      linkTitle: "New Supplier",
+      enabled: true,
+    },
+    {
       title: "Units",
       description: "Bundle different items together and sell them as kits",
       icon: Ruler,
@@ -62,6 +71,7 @@ export default function Items() {
       linkTitle: "New Unit",
       enabled: true,
     },
+
     {
       title: "Warehouses",
       description:
