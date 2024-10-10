@@ -39,7 +39,7 @@ export default function NewBrand() {
 
           <TextInput
             label="Suppliers Name"
-            name="name"
+            name="title"
             register={register}
             errors={errors}
             className="w-full"

@@ -26,3 +26,23 @@ export async function POST(request) {
     );
   }
 }
+
+export async function GET(request) {
+  try {
+    const warehouses = await db.warehouse.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return NextResponse.json(warehouses);
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        error,
+        message: "Failed to fetch warehouses",
+      },
+      { status: 500 }
+    );
+  }
+}
